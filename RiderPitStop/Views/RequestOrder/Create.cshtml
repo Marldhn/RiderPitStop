@@ -1,0 +1,121 @@
+﻿@model RiderPitStop.Models.RequestOrder
+
+<h1>Create Request Order</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Prepared By</label>
+        <input type="text" name="preparedBy" class="form-control" value="@ViewBag.PreparedBy" readonly />
+    </div>
+
+
+    <div class="form-group">
+        <label>Request Date</label>
+        <input type="datetime-local" name="dateTime" id="requestDate" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label>Note</label>
+        <textarea name="note" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Select Product</label>
+        <select id="productDropdown" class="form-control">
+            <option value="">Select a Product</option>
+            @foreach (var product in ViewBag.Products)
+            {
+                <option value="@product.ProductId" data-brand="@product.Brand" data-srp="@product.SRP" data-type="@product.Type" data-dp="@product.DP">
+                    @product.ProductName
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" id="quantityInput" min="1" class="form-control" placeholder="Enter quantity" />
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="addProduct()">Add Product</button>
+
+    <h4>Selected Products</h4>
+    <table class="table table-bordered" id="selectedProductsTable">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Brand</th>
+                <th>SRP</th>
+                <th>Type</th>
+                <th>Distributor Price</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Create Request</button>
+</form>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set the request date to the current date and time in Philippine time (UTC+8)
+            const dateInput = document.getElementById('requestDate');
+            const now = new Date();
+            now.setHours(now.getHours() + 8);
+            const formattedDate = now.toISOString().slice(0, 16);
+            dateInput.value = formattedDate;
+        });
+
+        function addProduct() {
+            // Get selected product details
+            const productDropdown = document.getElementById("productDropdown");
+            const selectedOption = productDropdown.options[productDropdown.selectedIndex];
+            const productId = selectedOption.value;
+            const productName = selectedOption.text;
+            const brand = selectedOption.getAttribute("data-brand");
+            const srp = selectedOption.getAttribute("data-srp");
+            const type = selectedOption.getAttribute("data-type");
+            const dp = selectedOption.getAttribute("data-dp");
+            const quantity = document.getElementById("quantityInput").value;
+
+            if (!productId || !quantity) {
+                alert("Please select a product and specify a quantity.");
+                return;
+            }
+
+            // Add product row to the table
+            const table = document.getElementById("selectedProductsTable").getElementsByTagName("tbody")[0];
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                        <td>
+                            ${productName}
+                            <input type="hidden" name="productIds[]" value="${productId}">
+                        </td>
+                        <td>${brand}</td>
+                        <td>${srp}</td>
+                        <td>${type}</td>
+                        <td>${dp}</td>
+                        <td>
+                            ${quantity}
+                            <input type="hidden" name="quantities[]" value="${quantity}">
+                        </td>
+                        <td><button type="button" class="btn btn-danger" onclick="removeProduct(this)">Remove</button></td>
+                    `;
+
+            // Reset product dropdown and quantity input
+            productDropdown.selectedIndex = 0;
+            document.getElementById("quantityInput").value = '';
+        }
+
+        function removeProduct(button) {
+            // Remove the product row from the table
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+}

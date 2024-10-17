@@ -1,0 +1,119 @@
+﻿@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml"; // Specify the new layout
+}
+
+<h2>Login</h2>
+
+<form asp-action="Login" method="post">
+    <div class="form-group">
+        <div class="input-icon">
+            <i class="fas fa-user"></i> <!-- User Icon -->
+            <input type="text" name="username" class="form-control" placeholder="Enter Username" required />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-icon">
+            <i class="fas fa-lock"></i> <!-- Lock Icon -->
+            <input type="password" name="password" class="form-control" placeholder="Enter Password" required />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-login">Login</button>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+            <div class="text-danger">
+            @ViewBag.ErrorMessage
+            </div>
+    }
+</form>
+
+<div class="forgot-password">
+    <a href="#">Forgot Username / Password</a>
+</div>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1e1e2f; /* Dark background */
+    }
+
+    .login-container {
+        max-width: 400px;
+        width: 100%;
+        padding: 20px;
+        background: #ffffff; /* White background for the login container */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        text-align: center; /* Center the text */
+    }
+
+    .logo-img {
+        width: 100px; /* Logo size */
+        margin-bottom: 20px; /* Space below logo */
+    }
+
+    h2 {
+        margin-bottom: 20px; /* Space below title */
+        font-family: Arial, sans-serif; /* Font style */
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        width:350px;
+        position: relative; /* Needed for positioning the icon */
+    }
+
+    .input-icon {
+        position: relative; /* Position relative for absolute positioning of the icon */
+    }
+
+        .input-icon i {
+            position: absolute;
+            left: 10px; /* Adjust left position as needed */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Center vertically */
+            color: #007bff; /* Icon color */
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 10px 10px 40px; /* Add left padding to prevent text overlap with the icon */
+        border: 1px solid #ccc; /* Light border */
+        border-radius: 5px; /* Rounded input fields */
+    }
+
+    .btn {
+        width: 50%; /* Full width button */
+        padding: 10px;
+        background-color: #007bff; /* Button color */
+        border: none;
+        border-radius: 15px; /* Rounded button */
+        color: white; /* Button text color */
+        cursor: pointer; /* Pointer cursor */
+        font-size: 16px;
+        transition: background-color 0.3s; /* Smooth transition */
+    }
+
+        .btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+    .forgot-password {
+        margin-top: 15px; /* Space above link */
+    }
+
+        .forgot-password a {
+            color: #007bff; /* Link color */
+            text-decoration: none; /* No underline */
+            font-size: 14px; /* Font size for the link */
+        }
+
+    .error-message {
+        color: red; /* Red color for error messages */
+        margin-top: 10px; /* Space above error message */
+    }
+</style>

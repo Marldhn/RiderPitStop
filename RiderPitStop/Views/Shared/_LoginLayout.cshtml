@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DonsTiendaCebu</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DonsTiendaCebu</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CDN -->
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1e1e2f; /* Dark background color */
+        }
+
+        .login-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background: white;
+            border-radius: 10px; /* Rounded corners for a modern feel */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center; /* Center the text */
+        }
+
+        /* Additional styles go here */
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        @RenderBody() <!-- This must be included to render the content of the view -->
+    </div>
+</body>
+</html>
